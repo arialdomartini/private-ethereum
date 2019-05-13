@@ -1,7 +1,7 @@
 Ethereum Private Network
 ========================
 
-An Ethereum private network running in Docker. This image is intended to be run interactively, for educational purpose.
+An Ethereum private network running in Docker. This image is intended to be run interactively, for educational purpose. See the article at [http://arialdomartini.github.io/private-ethereum.html](http://arialdomartini.github.io/private-ethereum.html).
 
 ## Run
 Build the docker image with:
