@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  node:
+    build:
+      context: ./node
+      dockerfile: Dockerfile
+    image: arialdomartini/private-ethereum
+    entrypoint: /app/start.sh
+    volumes:
+      - type: volume
+        source: ipc
+        target: /app/ipc
+
+  console:
+    build:
+      context: ./console
+      dockerfile: Dockerfile
+    image: arialdomartini/private-ethereum-console
+    volumes:
+      - type: volume
+        source: ipc
+        target: /app/ipc
+
+volumes:
+  ipc:
