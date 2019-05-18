@@ -12,20 +12,19 @@ Build the docker bundle with:
 
 This will create all the necessary images.
 
-Set the docker-compose up with an ordinary `docker-compose up` or with:
+Thenm set the docker-compose up with an ordinary `docker-compose up -d`.
+
+Alternatively, the command
 
 ```bash
 ./run.sh
 ```
 
+builds the images and runs the docker bundle.
+
 The bundle comprises 2 containers: the node and the `geth` console.
-To enter a bash inside the console container, from which the network can be run and played with, run:
 
-```bash
-./ssh.sh
-```
-
-then, from inside the container, open the `geth` console with:
+To enter a bash inside the console container from which the network can be run and played with, run:
 
 ```bash
 ./console.sh
