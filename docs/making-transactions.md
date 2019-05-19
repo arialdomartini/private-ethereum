@@ -346,4 +346,21 @@ Notice how, despite being empty, increased the `transactionIndex`. Also, the tra
 > eth.getTransactionReceipt(eth.getTransactionFromBlock(hash,0).hash).gasUsed
 21000
 ```
+
+
+## Raw transactions
+The json structures we got using the console are just a representation of the binary, raw data stored in the blockchain, which can be retrieved with `eth.getRawTransaction`:
+
+```javascript
+> eth.getRawTransaction(transaction)
+"0xf86d02843b9aca0083015f9094d74a59b538598bbfb1165accd1b00676cb098d86888ac7230489e800008081e9a0c84600f15ef991303fb6176403e5c0b3c5dfe0063c9dbc141d4d925783366480a061639418219493e306ac60fa0c09a5732d1d5e63ed3a907483b0f955942dc2bc"`
+```
+
+It's really the same transaction:
+
+```javascript
+> web3.sha3(eth.getRawTransaction(transaction), {encoding: "hex"}) == transaction
+true
+```
+
 [Mining blocks](docs/mining-blocks.md)
