@@ -127,10 +127,16 @@ After a while, the coinbase account will receive some Ether:
 
 ```javascript
 > eth.getBalance(eth.coinbase)
-42000000000000000000
+298000000000000000000
+> eth.blockNumber
+149
+> web3.fromWei(eth.getBalance(eth.coinbase), "ether")
+298
 ```
 
-At this point, we can stop the miner:
+So, coinbase owns `298` Ether.
+
+At this point, we can stop the miner, and we can start playing with transactions:
 
 ```javascript
 > miner.stop()
