@@ -210,7 +210,7 @@ INFO [05-19|06:45:21.576] Generating DAG in progress               epoch=0 perce
 ^C
 ```
 
-DAG stands for Direct Acyclic Graph, a finite directed graph with no cycles, where each node has one or more parents, just like in a Git repository.
+DAG stands both for Direct Acyclic Graph, a finite directed graph with no cycles, where each node has one or more parents, just like in a Git repository, and for Dagger Hashimoto, a specific mining algorithm based on Direct Acyclic Graphs. In this context, the DAG is the file generated in `~/.ethash` and used for the mining algorithm.
 
 > The Ethash algorithm expects the DAG as a two-dimensional array of uint32s (4-byte unsigned ints), with dimension (n × 16) where n is a large number. (n starts at 16777186 and grows from there.) Following the magic number, the rows of the DAG should be written sequentially into the file, with no delimiter between rows and each unint32 encoded in little-endian format.
 
@@ -283,9 +283,22 @@ total 2105352
 -rw-r--r--    1 root     root        1.0G May 19 06:49 full-R23-290decd9548b62a8
 ```
 
+After a while, the coinbase account will receive some Ether:
 
+```javascript
+> eth.getBalance(eth.coinbase)
+42000000000000000000
+```
+
+At this point, we can stop the miner:
+
+```javascript
+> miner.stop()
+null
+```
 ### Making transactions
 
+Now that the coinbase has some money, we can play with transactions.
 
 In order to use the private key, the account must be unlocked with the password:
 
