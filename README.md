@@ -96,7 +96,7 @@ and so far there's only the block `0`, built based on the genesis file provided 
 }
 ```
 
-No one is mining, and no peers is connected:
+No one is mining, and no peer is connected:
 
 ```javascript
 > eth.mining
