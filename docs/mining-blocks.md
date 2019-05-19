@@ -138,6 +138,16 @@ After a while, the coinbase account will receive some Ether:
 
 So, coinbase owns `298` Ether.
 
+Why 298 Ether?<br />
+Coinbase mined `149` blocks. Each mined block awards `2` Ethers, so `149 * 2 == 298`.
+
+The miner reward starts from `5` Ether per block, but we set 2 options in the genesis block `config` section that recuded the reward to `2`:
+
+* `"byzantiumBlock": 0` implies that the reward is reduced down to 3;
+* `"constantinopleBlock": 0` reduces to `2`.
+
+The reward also should include the fees related to the gas used consumed in the block. Since the mined blocks are empty, coinbase received no fees.
+
 At this point, we can stop the miner, and we can start playing with transactions:
 
 ```javascript
