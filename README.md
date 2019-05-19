@@ -1,7 +1,7 @@
 Ethereum Private Network
 ========================
 
-An Ethereum private network running in Docker. This bundle is intended to be run interactively, for educational purpose. See the article at [http://arialdomartini.github.io/private-ethereum.html](http://arialdomartini.github.io/private-ethereum.html).
+An Ethereum private network running in Docker. This bundle is intended to be run interactively, for educational purpose.
 
 ## Run
 ### Building the images
