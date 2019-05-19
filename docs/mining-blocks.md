@@ -146,7 +146,46 @@ The miner reward starts from `5` Ether per block, but we set 2 options in the ge
 * `"byzantiumBlock": 0` implies that the reward is reduced down to 3;
 * `"constantinopleBlock": 0` reduces to `2`.
 
-The reward also should include the fees related to the gas used consumed in the block. Since the mined blocks are empty, coinbase received no fees.
+The reward also should include the fees related to the gas used consumed in the block. Since the mined blocks are empty, coinbase received no fees. Fees are calculated based on gas used, transactions and uncle blocks (which we'll see later).
+
+```javascript
+> eth.getBlock(2)
+{
+  difficulty: 131072,
+  extraData: "0xd883010815846765746888676f312e31312e34856c696e7578",
+  gasLimit: 5009767,
+  gasUsed: 0,
+  hash: "0xd967c171fd24be77400a21a094100492aabffa1b37505bcb936e257c1d2eae45",
+  logsBloom: "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  miner: "0x2c98842bfc7434f2272d8940b4e26f48dbec2878",
+  mixHash: "0x3e70049b31ca1436bdee0808deeaf5a3ed67bd3e75bc115dba5749d61a9bf7ad",
+  nonce: "0x62a9388266fc49b3",
+  number: 2,
+  parentHash: "0x3219fae9fd143eccde0f12b7cb49a69202f0baa96dbcf303f6a9c93ff27f014b",
+  receiptsRoot: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+  sha3Uncles: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+  size: 536,
+  stateRoot: "0xdc9059613b5d4da820023bc8f6fe2cc1a55693580127fffa4004671407e167fa",
+  timestamp: 1558250389,
+  totalDifficulty: 263168,
+  transactions: [],
+  transactionsRoot: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+  uncles: []
+}
+> eth.getBlock(2).gasUsed
+0
+> eth.getBlock(2).transactions
+[]
+> eth.getBlock(2).uncles
+[]
+```
+
+Verify that coinbase is actually the block's miner:
+
+```javascript
+> eth.getBlock(2).miner == eth.coinbase
+true
+```
 
 At this point, we can stop the miner, and we can start playing with transactions:
 

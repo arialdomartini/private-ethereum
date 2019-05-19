@@ -6,9 +6,9 @@ Create an account
 > personal.newAccount()
 Passphrase: 
 Repeat passphrase: 
-"0xbdf0bd9e33f6ff150f62ec668bac68aba5f7e068"
+"0x2c98842bfc7434f2272d8940b4e26f48dbec2878"
 > eth.accounts
-["0xbdf0bd9e33f6ff150f62ec668bac68aba5f7e068"]
+["0x2c98842bfc7434f2272d8940b4e26f48dbec2878"]
 ```
 
 Note: in general, for most of its features, `geth` provides a synchronous and an asynchronous method. E.g., `eth.accounts` is synchronous, while `eth.getAccounts()` is the equivalent asynchronous version:
@@ -23,7 +23,7 @@ From now on, the first account created will be referenced as "coinbase":
 
 ```javascript
 > eth.coinbase
-"0xbdf0bd9e33f6ff150f62ec668bac68aba5f7e068"
+"0x2c98842bfc7434f2272d8940b4e26f48dbec2878"
 ```
 
 An account is a pair of a private and a public key, stored in the node as a json file:
