@@ -155,6 +155,10 @@ $ docker exec ethereum-node find /app/network99/keystore -type f -exec cat {} ";
 }
 ```
 
+To make a copy of the accounts keys, the files in `/app/network99/keystore` are the ones to be backed up.
+
+### Making transactions
+
 In order to use the private key, the account must be unlocked with the password:
 
 ```javascript
