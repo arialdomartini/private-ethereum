@@ -213,6 +213,33 @@ We can verify that the 10 Ethers have been transferred from `coinbase` to `secon
 
 Despite having spent `10` Ethers, `coinbase` is richer than before as it mined some additional blocks.
 
+That the transaction has been mined is also apparent from the existence of a transaction receipt:
+
+```javascript
+> eth.getTransactionReceipt(transaction)
+{
+  blockHash: "0x20d8584d70fd9863067340c6789811561540ae84218b2f57a5aca3f10480c804",
+  blockNumber: 150,
+  contractAddress: null,
+  cumulativeGasUsed: 63000,
+  from: "0x2c98842bfc7434f2272d8940b4e26f48dbec2878",
+  gasUsed: 21000,
+  logs: [],
+  logsBloom: "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  status: "0x1",
+  to: "0xd74a59b538598bbfb1165accd1b00676cb098d86",
+  transactionHash: "0x74bcc261f56295db80c63172476c35df4c2e44776f54829d8e4c507af1092646",
+  transactionIndex: 2
+}
+```
+
+The Transactoin Receipt also reports that the transaction costed `21000` gas:
+
+```javascript
+> eth.getTransactionReceipt(transaction).gasUsed
+21000
+```
+
 Let's inspect the transaction again:
 
 ```javascript
@@ -237,7 +264,10 @@ Let's inspect the transaction again:
 }
 ```
 
-Let's see which transactions are included in the hash referenced in the transaction as `blockHash`:
+Notice how some of the values that were unset before the mining process now do have a value: namely, `blockHash`, `blockNumber` and `transactionIndex`.
+
+
+Let's see which other transactions have been included in the block referenced in the transaction as `blockHash`:
 
 ```javascript
 > eth.getBlock(eth.getTransaction(transaction).blockHash).transactions
@@ -245,7 +275,6 @@ Let's see which transactions are included in the hash referenced in the transact
 ```
 
 There are 3 of them. One is the transaction with which `coinbase` moved `10` Ethers to `second`. The other 2 must be the ones we created and then we deleted:
-
 
 ```javascript
 > eth.getBlock(eth.getTransaction(transaction).blockHash).transactions[1]
@@ -269,7 +298,8 @@ There are 3 of them. One is the transaction with which `coinbase` moved `10` Eth
 }
 ```
 
-The `value: 0` confirms this. Notice how, despite being empty, the transaction costed `90000` gas, and increased the `transactionIndex`.
+The `value: 0` confirms this.
+
 
 Another way to access mined transactions is by using the `blockNumber` value:
 
@@ -310,4 +340,10 @@ Another way to access mined transactions is by using the `blockNumber` value:
 }
 ```
 
+Notice how, despite being empty, increased the `transactionIndex`. Also, the transaction costed us `21000` gas, even if it moved no Ethers:
+
+```javascript
+> eth.getTransactionReceipt(eth.getTransactionFromBlock(hash,0).hash).gasUsed
+21000
+```
 [Mining blocks](docs/mining-blocks.md)
