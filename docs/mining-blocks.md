@@ -1,3 +1,5 @@
+[Create an account](docs/create-account.md) :: [Making transactions](making-transactions.md)
+
 Mining blocks
 =============
 Before being able to send transactions, we need to provide coinbase with some Ether.
@@ -142,3 +144,5 @@ At this point, we can stop the miner, and we can start playing with transactions
 > miner.stop()
 null
 ```
+
+[Create an account](docs/create-account.md) :: [Making transactions](making-transactions.md)

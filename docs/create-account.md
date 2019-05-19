@@ -1,3 +1,5 @@
+[Initial state](docs/initial.md) :: [Mining blocks](mining-blocks.md)
+
 Create an account
 =================
 ```javascript
@@ -52,3 +54,6 @@ $ docker exec ethereum-node find /app/network99/keystore -type f -exec cat {} ";
 ```
 
 To make a copy of the accounts keys, the files in `/app/network99/keystore` are the ones to be backed up.
+
+
+[Initial state](docs/initial.md) :: [Mining blocks](mining-blocks.md)

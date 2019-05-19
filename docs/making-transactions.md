@@ -1,3 +1,5 @@
+[Mining blocks](docs/mining-blocks.md)
+
 Making transactions
 ===================
 Now that the coinbase has some money, we can play with transactions.
@@ -17,5 +19,4 @@ The account will be unlocked for 5 mins. It's still possible to specify a differ
 > personal.unlockAccount(address, password, duration)
 ```
 
-
-
+[Mining blocks](docs/mining-blocks.md)

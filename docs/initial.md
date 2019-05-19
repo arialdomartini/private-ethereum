@@ -1,3 +1,5 @@
+[Building the docker images and spinning up the network](run.md) :: [Create an account](create-account.md)
+
 Initial state
 =============
 Right after the node creation, there is no defined accounts:
@@ -45,3 +47,5 @@ false
 > eth.peerCount
 0
 ```
+
+[Building the docker images and spinning up the network](run.md) :: [Create an account](create-account.md)

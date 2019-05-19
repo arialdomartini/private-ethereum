@@ -1,3 +1,5 @@
+[Index](../README.md) :: [Initial state](initial.md)
+
 # Building the docker images and spinning up the network
 # Building the images
 Build the docker bundle with:
@@ -51,3 +53,4 @@ To stop the network, run:
 ```javascript
 docker-compose down
 ```
+[Index](../README.md) :: [Initial state](initial.md)
