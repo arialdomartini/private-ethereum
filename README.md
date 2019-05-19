@@ -4,34 +4,56 @@ Ethereum Private Network
 An Ethereum private network running in Docker. This bundle is intended to be run interactively, for educational purpose. See the article at [http://arialdomartini.github.io/private-ethereum.html](http://arialdomartini.github.io/private-ethereum.html).
 
 ## Run
+### Building the images
 Build the docker bundle with:
 
 ```bash
 ./build-bundle.sh
 ```
 
-This will create all the necessary images.
+This will create all the necessary images:
 
-Thenm set the docker-compose up with an ordinary `docker-compose up -d`.
+* `private-network`: the Ethereum node, containing the genesis block and the data dir;
+* `private-network-console`: a box with the Go Ethereum client `geth`. It can communicate with the node though the shared ipc file.
 
-Alternatively, the command
+
+In the first image, the script [`start.sh`](https://github.com/arialdomartini/private-ethereum/blob/master/start.sh) spins up a private network, running on the network id `99` on the genesis block [`genesis99.json`](https://github.com/arialdomartini/private-ethereum/blob/master/genesis99.json).
+
+
+### Running the network
+Either run an ordinary `docker-compose up -d` or run the command:
 
 ```bash
 ./run.sh
 ```
 
-builds the images and runs the docker bundle.
+which builds the images and runs the docker bundle.
 
-The bundle comprises 2 containers: the node and the `geth` console.
-
-To enter a bash inside the console container from which the network can be run and played with, run:
+To enter the console run:
 
 ```bash
 ./console.sh
 ```
 
-The script [`start.sh`](https://github.com/arialdomartini/private-ethereum/blob/master/start.sh) spins up a private network, running on the network id `99` on the genesis block [`genesis99.json`](https://github.com/arialdomartini/private-ethereum/blob/master/genesis99.json).
+Ideally, there would be no need to have 2 separate containers, one for running the node and one for the console. A single command is sufficient to run a node and getting a console:
 
+```bash
+geth \
+    --datadir /app/network99 \
+    --ipcpath /app/ipc/geth.ipc \
+    --networkid 99 \
+    console
+```
+
+Doing this, anyway, would implicate that the node is stopped as soon as the user leaves the console. On the contrary, by having two separate containers, one as a daemon for running the node and another one for the console, it is possible to enter and to leave the console multiple times keeping the node running in the background and without loosing any data.
+
+
+### Stop
+To stop the network, run:
+
+```javascript
+docker-compose down
+```
 
 ## A sample session
 
@@ -42,7 +64,7 @@ There is no defined accounts:
 []
 ```
 
-and so far there's only the block `0`:
+and so far there's only the block `0`, built based on the genesis file provided during the creation:
 
 ```javascript
 > eth.blockNumber

@@ -1,1 +1,1 @@
-docker-compose up -d
+./build-bundle.sh && docker-compose up -d

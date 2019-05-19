@@ -7,7 +7,7 @@ geth \
 
 geth \
     --datadir /app/network99 \
-    --ipcpath /ipc/geth.ipc \
+    --ipcpath /app/ipc/geth.ipc \
     --networkid 99
 
 exec "$@"

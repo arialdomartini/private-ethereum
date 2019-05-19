@@ -6,6 +6,7 @@ services:
       context: ./node
       dockerfile: Dockerfile
     image: arialdomartini/private-ethereum
+    container_name: ethereum-node
     entrypoint: /app/start.sh
     volumes:
       - type: volume
@@ -17,6 +18,7 @@ services:
       context: ./console
       dockerfile: Dockerfile
     image: arialdomartini/private-ethereum-console
+    container_name: ethereum-console
     volumes:
       - type: volume
         source: ipc
