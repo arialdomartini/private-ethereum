@@ -50,11 +50,11 @@ The account will be unlocked for 5 minutes only. It's still possible to specify 
 ```
 
 ## Transfering Ethers
-With Coinbase unblocked, let's try again sending the transaction:
+With Coinbase unlocked, let's try again sending the transaction:
 
 ```javascript
-> eth.sendTransaction({ from: eth.coinbase, to: second, value: web3.toWei(10, "ether")})
-"0xb82c851cd472051cad625f4d91f3271d14d25a2824dcbdff99f20abf862508ef"
+> transaction = eth.sendTransaction({ from: eth.coinbase, to: second, value: web3.toWei(10, "ether")})
+"0x74bcc261f56295db80c63172476c35df4c2e44776f54829d8e4c507af1092646"
 ```
 
 Despite the transaction has been successfully created, `coinbase`'s and `second`'s balance have not changed at all:
@@ -66,6 +66,37 @@ Despite the transaction has been successfully created, `coinbase`'s and `second`
 0
 ```
 
+In fact, the transaction is still pending, and it has not yet been included in any mined block:
+
+```javascript
+> eth.pendingTransactions
+[{
+    blockHash: null,
+    blockNumber: null,
+    from: "0x2c98842bfc7434f2272d8940b4e26f48dbec2878",
+    gas: 90000,
+    gasPrice: 1000000000,
+    hash: "0x74bcc261f56295db80c63172476c35df4c2e44776f54829d8e4c507af1092646",
+    input: "0x",
+    nonce: 0,
+    r: "0xc84600f15ef991303fb6176403e5c0b3c5dfe0063c9dbc141d4d925783366480",
+    s: "0x61639418219493e306ac60fa0c09a5732d1d5e63ed3a907483b0f955942dc2bc",
+    to: "0xd74a59b538598bbfb1165accd1b00676cb098d86",
+    transactionIndex: 0,
+    v: "0xe9",
+    value: 10000000000000000000
+}]
+
+```
+
+Note: once a transaction has been created, it can't be deleted, but it's always possible to overwrite it, as long as it hasn't been included into any mined block. To overwrite the original transaction, we need to rebroadcast the same transaction with the same nonce, but increasing the gase price at least of `10%`.
+
+So, to cancel a transaction, we could rewrite it setting the value to `0`:
+
+```javascript
+> eth.sendTransaction({ from: eth.coinbase, to: second, value: 0, nonce: '0', gasPrice: 2000000000, gasLimit: 100000})
+"0x74bcc261f56295db80c63172476c35df4c2e44776f54829d8e4c507af1092646"
+```
 
 
 [Mining blocks](docs/mining-blocks.md)
