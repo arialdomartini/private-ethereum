@@ -271,5 +271,43 @@ There are 3 of them. One is the transaction with which `coinbase` moved `10` Eth
 
 The `value: 0` confirms this. Notice how, despite being empty, the transaction costed `90000` gas, and increased the `transactionIndex`.
 
+Another way to access mined transactions is by using the `blockNumber` value:
+
+```javascript
+> eth.getTransactionFromBlock(150, 1)
+{
+  blockHash: "0x20d8584d70fd9863067340c6789811561540ae84218b2f57a5aca3f10480c804",
+  blockNumber: 150,
+  from: "0x2c98842bfc7434f2272d8940b4e26f48dbec2878",
+  gas: 90000,
+  gasPrice: 2000000000,
+  hash: "0x6d82777bef247d13a8bf9c1d42683a7432d010178e7bb249a32c87bb46d551fb",
+  input: "0x",
+  nonce: 1,
+  r: "0xa55ae34a3a703da475e6f4a7407ee8b25371a32b2c325895e68ff44658af7063",
+  s: "0x584b9087d0a0fa1f1a480b879620ec28b88714ddecef5778e8d82765982308e5",
+  to: "0xd74a59b538598bbfb1165accd1b00676cb098d86",
+  transactionIndex: 1,
+  v: "0xe9",
+  value: 0
+}
+> eth.getTransactionFromBlock(150, 2)
+{
+  blockHash: "0x20d8584d70fd9863067340c6789811561540ae84218b2f57a5aca3f10480c804",
+  blockNumber: 150,
+  from: "0x2c98842bfc7434f2272d8940b4e26f48dbec2878",
+  gas: 90000,
+  gasPrice: 1000000000,
+  hash: "0x74bcc261f56295db80c63172476c35df4c2e44776f54829d8e4c507af1092646",
+  input: "0x",
+  nonce: 2,
+  r: "0xc84600f15ef991303fb6176403e5c0b3c5dfe0063c9dbc141d4d925783366480",
+  s: "0x61639418219493e306ac60fa0c09a5732d1d5e63ed3a907483b0f955942dc2bc",
+  to: "0xd74a59b538598bbfb1165accd1b00676cb098d86",
+  transactionIndex: 2,
+  v: "0xe9",
+  value: 10000000000000000000
+}
+```
 
 [Mining blocks](docs/mining-blocks.md)
