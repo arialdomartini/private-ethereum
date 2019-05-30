@@ -133,6 +133,13 @@ On the second peer, let's verify that the block `168` holds the same `hash`
 true
 ```
 
+It would be also useful to verify that both the nodes belong to a network with the same id:
+
+```javascript
+> net.version
+"99"
+```
+
 ### Verification through the use of a transaction
 Send `amount` Ether to `someone` and just check `someone`'s balance from the other node; if the balance has increases, there's a high probability the two nodes are connectd. It's not 100%, as some other transaction from some other peer could be responsible for the balance increse.
 
