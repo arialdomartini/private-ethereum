@@ -1,4 +1,4 @@
-[Creating transactions](making-transactions.md)
+[Creating transactions](making-transactions.md) : [Connecting nodes](connecting-nodes.md)
 
 ## Including the transaction in a mined block
 Our pending transaction has been automatically included in tre Transaction Pool, from which the pending transactions are taken for the inclusion in a block.
@@ -236,4 +236,4 @@ Error: nonce too low
 
 from which we untuit that the "nonce" is a strictly, monotonous increasing value representing the number of transactions created by an account.
 
-[Creating transactions](making-transactions.md)
+[Creating transactions](making-transactions.md) : [Connecting nodes](connecting-nodes.md)
