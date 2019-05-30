@@ -222,3 +222,18 @@ It's really the same transaction:
 > web3.sha3(eth.getRawTransaction(transaction), {encoding: "hex"}) == transaction
 true
 ```
+
+We could try to resend it:
+
+```javascript
+> eth.sendRawTransaction(eth.getRawTransaction(transaction))
+Error: nonce too low
+    at web3.js:3143:20
+    at web3.js:6347:15
+    at web3.js:5081:36
+    at <anonymous>:1:1
+```
+
+from which we untuit that the "nonce" is a strictly, monotonous increasing value representing the number of transactions created by an account.
+
+[Creating transactions](making-transactions.md)
