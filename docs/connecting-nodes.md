@@ -81,5 +81,67 @@ Instead of manually adding peers, to ease the startup process, one could provide
 
 Usually, static nodes are created with the sole goal to ease the network startup, therefore they are setup not to mine. Static nodes are an easy target for attacks, so it makes sense to let them have an attack surface as small as possible.
 
+
+## Verifying the connection
+
+There are several ways to verify that 2 different peers `A` and `B` are connected to the same network:
+
+* Verify `A` and `B` see the same last block;
+* Send a transaction from `A` and check it is visible in `B`
+* Send a dummy transaction (which burns Ethers) from `A` to `B` and check the balance of receiver on `B`;
+
+Of course, the first approach is the cheapest one, as the other ones require Ethers to be transferred. Let's try all of the above:
+
+### Verification through the last block
+
+On the first node, get the latest block:
+
+```javascript
+> eth.getBlock("latest")
+{
+  difficulty: 134645,
+  extraData: "0xd883010815846765746888676f312e31312e34856c696e7578",
+  gasLimit: 5890696,
+  gasUsed: 0,
+  hash: "0x23d23763142578c4ab9e5d76d824d5c37423412b0fbcce1448b34777d4dbf330",
+  logsBloom: "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  miner: "0x2c98842bfc7434f2272d8940b4e26f48dbec2878",
+  mixHash: "0xcdbdb81b204178a655154ff112bd3cf18da990a3644670ca6bab46c34996e565",
+  nonce: "0x41641657262a3c29",
+  number: 168,
+  parentHash: "0x14842415d857c6f88f8d7ff7faacd416411b37e4c0985aa01bc016e523c6e4a2",
+  receiptsRoot: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+  sha3Uncles: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+  size: 537,
+  stateRoot: "0x8a62a66d19466c4bc10a5cf992a5eba56fa61e94ba65b092930a3b1f95a6c8e1",
+  timestamp: 1558281787,
+  totalDifficulty: 22740660,
+  transactions: [],
+  transactionsRoot: "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+  uncles: []
+}
+> latest=eth.getBlock("latest").number
+168
+> hash=eth.getBlock(latest).hash
+"0x23d23763142578c4ab9e5d76d824d5c37423412b0fbcce1448b34777d4dbf330"
+```
+
+On the second peer, let's verify that the block `168` holds the same `hash`
+
+```javascript
+> eth.getBlock(latest).hash == hash
+true
+```
+
+### Verification through the use of a transaction
+Send `amount` Ether to `someone` and just check `someone`'s balance from the other node; if the balance has increases, there's a high probability the two nodes are connectd. It's not 100%, as some other transaction from some other peer could be responsible for the balance increse.
+
+```javascript
+> eth.sendTransaction({from: eth.accounts[0], to: someone, value:amount })
+```
+
+### Burn Ethers
+You could choose a fictional account, such as `"0x0000000000000000000000000000000000000000"`, and send a symbolic amount of Ether to it. Of course, you will be burning Ethers, as after the verification it won't be possible to recover that money.
+
 [Including the transaction in a mined block](mining-transactions.md)
 
