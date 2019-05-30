@@ -1,6 +1,6 @@
 [Create the newtork](introduction.md) :: [Initial state](initial.md)
 # Building the docker images and spinning up the network
-# Building the images
+## Building the images
 Build the docker bundle with:
 
 ```bash
@@ -16,7 +16,7 @@ This will create all the necessary images:
 In the first image, the script [`start.sh`](https://github.com/arialdomartini/private-ethereum/blob/master/start.sh) spins up a private network, running on the network id `99` on the genesis block [`genesis99.json`](https://github.com/arialdomartini/private-ethereum/blob/master/genesis99.json).
 
 
-### Running the network
+## Running the network
 Either run an ordinary `docker-compose up -d` or run the command:
 
 ```bash
