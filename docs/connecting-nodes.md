@@ -1,4 +1,4 @@
-[Including the transaction in a mined block](mining-transactions.md)
+[Including the transaction in a mined block](mining-transactions.md) :: [Bytecode](bytecode.md)
 
 # Connecting nodes
 
@@ -150,5 +150,5 @@ Send `amount` Ether to `someone` and just check `someone`'s balance from the oth
 ### Burn Ethers
 You could choose a fictional account, such as `"0x0000000000000000000000000000000000000000"`, and send a symbolic amount of Ether to it. Of course, you will be burning Ethers, as after the verification it won't be possible to recover that money.
 
-[Including the transaction in a mined block](mining-transactions.md)
+[Including the transaction in a mined block](mining-transactions.md) :: [Bytecode](bytecode.md)
 
