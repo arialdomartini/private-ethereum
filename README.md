@@ -15,3 +15,4 @@ An Ethereum private network running in Docker. This bundle is intended to be run
   * [Connecting nodes in a network](docs/connecting-nodes.md)
 * Smart Contracts
   * [Bytecode](docs/bytecode.md)
+  * [A first, simple program](docs/contract-1.md)

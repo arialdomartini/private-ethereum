@@ -1,4 +1,4 @@
-[Connecting nodes in a network](connecting-nodes.md)
+[Connecting nodes in a network](connecting-nodes.md) :: [A first, simple program](contract-1.md)
 
 # Bytecode
 Ethereum nodes runs a turing-complete virtual machine called Ethereum Virtual Macchine (EVM), able to execute programs in a machine language made of different istructions, each represented with an *opcode*. Programs are called Smart Contracts.<br/>
@@ -24,5 +24,4 @@ When senders creates transactions, they specify 2 important quantities:
 
 We will be more detailed in the next pages.
 
-
-[Connecting nodes in a network](connecting-nodes.md)
+[Connecting nodes in a network](connecting-nodes.md) :: [A first, simple program](contract-1.md)
