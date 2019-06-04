@@ -1,4 +1,4 @@
-[Another contract](contract-2.md)
+[Another contract](contract-2.md) :: [Invoking a contract](invoking-a-contract.md)
 # Packing code
 
 Let's write a contract that stores at address `0x00` whatever data is sent it through a transaction. We can use the command `CALLDATALOAD` to retrieve 32 bytes of data sent with a transaction and to push it to the stack.
@@ -148,4 +148,4 @@ That's nice: previously we got a `0x00`. Also, this is exactly what we wrote in 
 It sounds we finally managed to store some contract code in the blockchain.<br/>
 Now it's time to invoke it.
 
-[Another contract](contract-2.md)
+[Another contract](contract-2.md) :: [Invoking a contract](invoking-a-contract.md)
