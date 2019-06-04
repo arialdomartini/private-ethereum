@@ -18,3 +18,4 @@ The sample session is based on the class material of [B9 lab's Academy](https://
     * [Bytecode](docs/bytecode.md)
     * [A first, simple program](docs/contract-1.md)
     * [Another contract](docs/contract-2.md)
+    * [Packing code](docs/packing-code.md)

@@ -1,4 +1,4 @@
-[A first, simple program](contract-1.md)
+[A first, simple program](contract-1.md) :: [Packing code](packing-code.md)
 
 # Another contract
 So, our first contract stored the value `0x10` in the storage location `0x00`. Let's try to overwrite this value with another program. We won't succeed, but it's important to understand why.<br/>
@@ -21,7 +21,7 @@ Let's try to send this data code with a transaction, using as target the contrac
 ```javascript
 > var transactionWithCode2 = eth.sendTransaction({ from: eth.coinbase, to: eth.getTransactionReceipt(transactionWithCode).contractAddress, data: bytecode2})
 undefined
-> > miner.start(1)
+> miner.start(1)
 
 null
 > txpool.content.pending
@@ -76,23 +76,17 @@ We created the first contract with:
 Therefore, with our second
 
 ```javascript
-> var transactionWithCode2 = eth.sendTransaction({ from: eth.coinbase, to: eth.getTransactionReceipt(transactionWithCode).contractAddress, data: bytecode2})
+> var transactionWithCode2 = eth.sendTransaction({
+      from: eth.coinbase,
+      to: eth.getTransactionReceipt(transactionWithCode).contractAddress,
+      data: bytecode2
+  })
 ```
 
 we haven't overwritten the first program, but we invoked its code, using as the payload the data `0x6011600055`.
 
 ## Contract code
 What's the first program's code? Isn't it the `0x6003600501600202600055` corresponding to the assembly code we wrote?
-
-```assembly
-PUSH1 0x03
-PUSH1 0x05
-ADD
-PUSH1 0x02
-MUL
-PUSH1 0x00
-SSTORE
-```
 
 No, it isn't, and we can verify it with:
 
@@ -103,4 +97,6 @@ No, it isn't, and we can verify it with:
 
 No code at all. This may sound surprising.
 
-[A first, simple program](contract-1.md)
+As a matter of fact, when we sent the code with our first transaction, the code was executed and then discarded right after the execution.<br/>
+If we want the contract to hold some code to eventually be executed with further transactions, we need to pack the code.
+[A first, simple program](contract-1.md) :: [Packing code](packing-code.md)
