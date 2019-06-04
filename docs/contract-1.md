@@ -1,4 +1,4 @@
-[Bytecode](bytecode.md)
+[Bytecode](bytecode.md) :: [Another contract](contract-2.md)
 # A first, simple program
 Let's try to write and execute a dead simple program, directly writing its bytecode, and then pushing it into the blockchain with a transaction.
 
@@ -132,4 +132,4 @@ Notice that to execute this code we spent `73704` gas:
 73704
 ```
 
-[Bytecode](bytecode.md)
+[Bytecode](bytecode.md) :: [Another contract](contract-2.md)
