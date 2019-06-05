@@ -1,6 +1,6 @@
 [Packing code](packing-code.md)
 
-#Invoking a contract
+# Invoking a contract
 
 Let's save the contract code in a variable:
 

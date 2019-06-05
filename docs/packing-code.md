@@ -14,12 +14,12 @@ The program is not complete, because now we need to pack it to let the EVM unpac
 
 This is the rational:
 
-* When some code is sent with a transaction, it will be executed;
-* The code will terminate when `RETURN` is found;
-* Whatever code remains in memory after the execution will be stored as the contract code.
-* We will need to specify the EVM where at which address to find the contract code and its length in bytes, so it can copy it to the contract.
+* When some code is sent with a transaction, it will be immediately executed; 
+* The code will terminate when `RETURN` is found; at this point, the code is discarded;
+* Whatever code remains in memory after the execution will be stored as the contract code;
+* We will need to specify the EVM the address the contract code can be found at, and the contract code length in bytes, so it can copy it to the contract.
 
-Here we go: we must find a way to copy some code in a memory position, so it will be retained after the code execution. The code to be executed will be just the one needed to copy the contract code in memory.
+Here we go: we must find a way to copy some code in a memory position, so it will be retained after the code execution. In other words, the code initially sent with a transaction is the startup code: it is responsible to set up the initial state of the storage, and to copy the contract code in meory.
 
 ```assembly
 // First, copy the bytecode to some memory slot:
