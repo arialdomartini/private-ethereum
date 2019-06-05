@@ -11,7 +11,7 @@ This will create all the necessary images:
 
 * `private-network`: the Ethereum node, containing the genesis block and the data dir;
 * `private-network-console`: a box with the Go Ethereum client `geth`. It can communicate with the node though the shared ipc file.
-
+* `private-ethereum-solc`: a box with the Solidity compiler `solc` and the JSON command helper `qj`.
 
 In the first image, the script [`start.sh`](https://github.com/arialdomartini/private-ethereum/blob/master/start.sh) spins up a private network, running on the network id `99` on the genesis block [`genesis99.json`](https://github.com/arialdomartini/private-ethereum/blob/master/genesis99.json).
 
@@ -45,6 +45,14 @@ geth \
 
 Doing this, anyway, would implicate that the node is stopped as soon as the user leaves the console. On the contrary, by having two separate containers, one as a daemon for running the node and another one for the console, it is possible to enter and to leave the console multiple times keeping the node running in the background and without loosing any data.
 
+
+To enter a shell with the Solidity compiler available, run:
+
+```bash
+./compiler.sh
+```
+
+The container will have visibility on the root project directory.
 
 ## Stop
 To stop the network, run:

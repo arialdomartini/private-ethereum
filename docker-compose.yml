@@ -24,5 +24,14 @@ services:
         source: ipc
         target: /app/ipc
 
+  compiler:
+    build:
+      context: ./compiler
+      dockerfile: Dockerfile
+    image: arialdomartini/private-ethereum-solc
+    container_name: ethereum-solc
+    volumes:
+      - .:/src
+
 volumes:
   ipc:

@@ -1,4 +1,4 @@
-[Invoking a contract](invoking-a-contract.md)
+[Invoking a contract](invoking-a-contract.md) :: [Deploying a faucet](faucet.md)
 
 # Solidity - Introduction
 
@@ -43,4 +43,4 @@ contract CanChangeOwner is Owned {
 
 
 
-[Invoking a contract](invoking-a-contract.md)
+[Invoking a contract](invoking-a-contract.md) :: [Deploying a faucet](faucet.md)
