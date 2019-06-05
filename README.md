@@ -14,9 +14,11 @@ The sample session is based on the class material of [B9 lab's Academy](https://
   * [Making transactions](docs/making-transactions.md)
   * [Including the transaction in a mined block](docs/mining-transactions.md)
   * [Connecting nodes in a network](docs/connecting-nodes.md)
-  * Smart Contracts
+  * Smart Contracts in bytecode
     * [Bytecode](docs/bytecode.md)
     * [A first, simple program](docs/contract-1.md)
     * [Another contract](docs/contract-2.md)
     * [Packing code](docs/packing-code.md)
     * [Invoking a contract](docs/invoking-a-contract.md)
+  * Smart Contracts with Solidity
+    * [Introduction](docs/solidity-introduction.md)

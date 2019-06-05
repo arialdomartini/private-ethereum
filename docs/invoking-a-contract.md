@@ -1,4 +1,4 @@
-[Packing code](packing-code.md)
+[Packing code](packing-code.md) :: [Introduction](solidity-introduction.md)
 
 # Invoking a contract
 
@@ -73,4 +73,4 @@ We are done with this experiment. We can stop the miner:
 > miner.stop()
 null
 ```
-[Packing code](packing-code.md)
+[Packing code](packing-code.md) :: [Introduction](solidity-introduction.md)
