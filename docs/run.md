@@ -52,4 +52,10 @@ To stop the network, run:
 ```javascript
 docker-compose down
 ```
+
+
+## Compiling Solidity code
+The script `compiler.sh` runs an Alpine container with the Ethereum `solc` compiler. The container has visibility on the current directory.
+
+
 [Create the newtork](introduction.md) :: [Initial state](initial.md)
