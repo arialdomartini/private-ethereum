@@ -191,7 +191,10 @@ Run:
 We have all that's needed to deploy the Faucet through a transaction. Notice that we cannot reuse [the previous approach](packing-code.md), when we sent the bytecode with:
 
 ```javascript
-> var transactionWithCode2 = eth.sendTransaction({ from: eth.coinbase, to: eth.getTransactionReceipt(transactionWithCode).contractAddress, data: bytecode2})
+> var transactionWithCode2 = eth.sendTransaction({ 
+    from: eth.coinbase, 
+    to: eth.getTransactionReceipt(transactionWithCode).contractAddress, 
+    data: bytecode2 })
 ```
 
 In the previous case, the bytecode contained the setup code needed to copy the contract code to memory:
