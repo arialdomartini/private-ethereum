@@ -2,7 +2,7 @@
 
 # Interacting with the faucet contract
 
-## `getBalance()`
+## Invoking `getBalance()`
 Let's start by invoking `getBalance()`. It is an idempotent operation that will not cost us any gas:
 
 
@@ -57,6 +57,18 @@ So, if we need to compare the 2 balances, we must use:
 > new BigNumber(eth.getBalance(instance.address)).equals(new BigNumber(instance.getBalance()))
 true
 ```
+
+## Invoking methods
+In general, there are 2 very different ways to invoke a method:
+
+* with a local call, by directly invoking the method or running `someMethod.call()`;
+* through a transaction.
+
+This is particularly important for methods that modify the contract state.
+
+* Local calls are read-only operations which don't consume any Ether. They are like dry-run execution. Since they are not broadcasted to the network, they are executed synchronously;
+* Invocation through a transaction, on the contrary, are broadcast to the network, processed by one miner and, if valid, included in a block. For this reason they are executed asynchronously, and the immediate return value is not the function's result but a transaction hash.
+
 
 
 [Deploying a faucet](faucet.md)
