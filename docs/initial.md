@@ -48,4 +48,11 @@ false
 0
 ```
 
+Notice that `eth` is a shortcut for `web3.eth`:
+
+```javascript
+> eth == web3.eth
+true
+```
+
 [Building the docker images and spinning up the network](run.md) :: [Create an account](create-account.md)
