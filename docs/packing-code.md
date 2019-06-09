@@ -10,7 +10,7 @@ PUSH1 0x00
 SSTORE
 ```
 
-The program is not complete, because now we need to pack it to let the EVM unpack it bak and execute it at a later stage. To pack the bytecode, we must put some special code in front of it.
+The program is not complete, because now we need to pack it to let the EVM unpack it bak and execute it at a later stage. To pack the bytecode, we must put some special code in front of it, the so called *constructor bytecode*.
 
 This is the rational:
 
