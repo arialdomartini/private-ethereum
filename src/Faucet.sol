@@ -15,7 +15,7 @@ contract Faucet {
     }
 
     function getBalance() public view returns (uint) {
-        address(this).balance;
+        return address(this).balance;
     }
 
     function withdrawWei() public {

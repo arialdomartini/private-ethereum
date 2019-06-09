@@ -23,3 +23,4 @@ The sample session is based on the class material of [B9 lab's Academy](https://
   * Smart Contracts with Solidity
     * [Introduction](docs/solidity-introduction.md)
     * [Deploying a faucet](docs/faucet.md)
+    * [Interacting with the faucet contract](docs/faucet-interact.md)
