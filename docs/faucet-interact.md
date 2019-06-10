@@ -171,5 +171,159 @@ undefined
 true
 ```
 
+We could have obtained the same result by directly sending an artfully crafted transaction:
+
+```javascript
+> eth.sendTransaction({
+  from: eth.accounts[0],
+  to: instance.address,
+  data: value,
+  gas: 90000,
+  gasPrice: eth.gasPrice });
+```
+
+## Failing method invocation
+
+What if we call `sendWei()` again? It should fail, since the faucet is broke. But given that the call is asynchronous, it won't be immediate to understand it failed:
+
+
+```javascript
+> var transaction2 = instance.sendWei(eth.accounts[1], {from: eth.accounts[0]})
+undefined
+> miner.start(1)
+null
+> txpool.status.pending
+0
+> miner.stop()
+null
+> eth.getTransaction(transaction2)
+{
+  blockHash: "0xb95e3c72ed37b8ce47d799ecde0bd6d521df777322199c873ccf596ac53a60c5",
+  blockNumber: 31,
+  from: "0x8b52f87a9dc74c90d31ca5596464db452bb0b55a",
+  gas: 90000,
+  gasPrice: 1000000000,
+  hash: "0xdfc92211d9651b3c5661848b8f63ff0790e1899c29b16f58ff1b04deca0d51cd",
+  input: "0x148f2e5e000000000000000000000000addd74744dc8e1f03955398769b1ace793960141",
+  nonce: 2,
+  r: "0x1044297b2e7d7c8c7f017cf7156b9e1408f5410525659980ebe679370aed0248",
+  s: "0x3b6a05fea162bb14f2b9bb659730bb161061dfac7d81faca6c8c64453b046144",
+  to: "0xf913dbde31dd9b30e4479381a249c1c6019042dc",
+  transactionIndex: 0,
+  v: "0xea",
+  value: 0
+}
+```
+
+There's nothing in the transaction data that could help us understand if the method invocation succeded or failed. Let's examine the transaction receipts:
+
+```javascript
+> eth.getTransactionReceipt(transaction)
+{
+  blockHash: "0x71d7d48231240c50b3c4661c31f456968cf15233adc5e66e0850adbf050a4ea7",
+  blockNumber: 28,
+  contractAddress: null,
+  cumulativeGasUsed: 55618,
+  from: "0x8b52f87a9dc74c90d31ca5596464db452bb0b55a",
+  gasUsed: 55618,
+  logs: [],
+  logsBloom: "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  status: "0x1",
+  to: "0xf913dbde31dd9b30e4479381a249c1c6019042dc",
+  transactionHash: "0x594ae7ab20cee6b54eb2b998b2535876149fe66fa342b92dedbb948b045f329e",
+  transactionIndex: 0
+}
+> eth.getTransactionReceipt(transaction2)
+{
+  blockHash: "0xb95e3c72ed37b8ce47d799ecde0bd6d521df777322199c873ccf596ac53a60c5",
+  blockNumber: 31,
+  contractAddress: null,
+  cumulativeGasUsed: 30620,
+  from: "0x8b52f87a9dc74c90d31ca5596464db452bb0b55a",
+  gasUsed: 30620,
+  logs: [],
+  logsBloom: "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  status: "0x0",
+  to: "0xf913dbde31dd9b30e4479381a249c1c6019042dc",
+  transactionHash: "0xdfc92211d9651b3c5661848b8f63ff0790e1899c29b16f58ff1b04deca0d51cd",
+  transactionIndex: 0
+}
+```
+
+The `status` is different:
+
+```javascript
+> eth.getTransactionReceipt(transaction).status
+"0x1"
+> eth.getTransactionReceipt(transaction2).status
+"0x0"
+```
+
+
+The status `0x0` means that the transaction was not accepted and was rolled back.
+
+Notice that despite the fact that the second transaction was rollbacked:
+
+* it has been included in a block anyway:
+
+```javascript
+> eth.getBlock(eth.getTransaction(transaction2).blockHash)
+{
+  difficulty: 131072,
+  extraData: "0xd883010815846765746888676f312e31312e34856c696e7578",
+  gasLimit: 5153558,
+  gasUsed: 30620,
+  hash: "0xb95e3c72ed37b8ce47d799ecde0bd6d521df777322199c873ccf596ac53a60c5",
+  logsBloom: "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+  miner: "0x8b52f87a9dc74c90d31ca5596464db452bb0b55a",
+  mixHash: "0xe0e613f6b8e1c389922450df3f25a8500bfcb10a990dc634fcb5af821c8c9d38",
+  nonce: "0x51c1c7c36c0911f2",
+  number: 31,
+  parentHash: "0x872dd5b06cde0b43da45c9ca2d1d8ddb550f85fd1c2f3ba1b86e6e89a84f33e8",
+  receiptsRoot: "0x80215438af2fabb470901b09060af0c5b5682ebbf5b4a9d3734515350d1be920",
+  sha3Uncles: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+  size: 678,
+  stateRoot: "0x7837969ac8afec9e10e4a0e6d8ab77e81e5234f27ddb66d7b161dcb4cd7998ac",
+  timestamp: 1560151307,
+  totalDifficulty: 4079296,
+  transactions: ["0xdfc92211d9651b3c5661848b8f63ff0790e1899c29b16f58ff1b04deca0d51cd"],
+  transactionsRoot: "0xebfd18b7bf32ca23af01ffbcc3ac0b49f7d4a491b07d19e1ebe08f9ed40e3153",
+  uncles: []
+}
+> eth.getBlock(eth.getTransaction(transaction2).blockHash).transactions[0] == transaction2
+true
+```
+
+* it costed money
+
+The question is: who is paying this cost? If we check the balance of `coinbase`, it seems no one paied. But this is only because coinbase spent the gas for paying the miner, but it also is the miner.
+
+Let's top up the faucet using an account different from the one that will mine the block:
+
+## Topping up the faucet
+
+```javascript
+> eth.getBalance(eth.accounts[1])
+1000000000000000000
+> web3.fromWei(eth.getBalance(eth.accounts[1]), "ether")
+1
+> personal.unlockAccount(eth.accounts[1])
+Unlock account 0xaddd74744dc8e1f03955398769b1ace793960141
+Passphrase: 
+true
+> eth.sendTransaction({from: eth.accounts[1], to: instance.address, value: web3.toWei(0.5, "ether")})
+"0x8bac717bd15ee47afaebf0680eb170ae63815cddc52540d5bcb96fa33f1c0190"
+> miner.start(1)
+null
+> txpool.status.pending
+0
+> miner.stop()
+null
+> web3.fromWei(eth.getBalance(eth.accounts[1]), "ether")
+0.49997896
+> 
+```
+
+So, account 1 sent `0.5` ehter, but actually spent a bit more. It makes sense.
 
 [Deploying a faucet](faucet.md)
