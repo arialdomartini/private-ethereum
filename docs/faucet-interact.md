@@ -311,7 +311,9 @@ Let's top up the faucet using an account different from the one that will mine t
 Unlock account 0xaddd74744dc8e1f03955398769b1ace793960141
 Passphrase: 
 true
-> eth.sendTransaction({from: eth.accounts[1], to: instance.address, value: web3.toWei(0.5, "ether")})
+> var transaction3 = eth.sendTransaction({from: eth.accounts[1], to: instance.address, value: web3.toWei(0.5, "ether")})
+undefined
+> transaction3
 "0x8bac717bd15ee47afaebf0680eb170ae63815cddc52540d5bcb96fa33f1c0190"
 > miner.start(1)
 null
@@ -319,11 +321,70 @@ null
 0
 > miner.stop()
 null
+> web3.fromWei(eth.getBalance(instance.address), "ether")
+0.5
 > web3.fromWei(eth.getBalance(eth.accounts[1]), "ether")
 0.49997896
 > 
 ```
 
-So, account 1 sent `0.5` ehter, but actually spent a bit more. It makes sense.
+So, account 1 sent `0.5` ether, but actually spent a bit more. It makes sense.<br/>
+The transaction costed:
+
+```javascript
+> eth.getTransaction(transaction3).gas * eth.getTransaction(transaction3).gasPrice
+90000000000000
+```
+
+### Invoking a method manually forging the transaction
+So, after all it seems that for the EVM there's not so much difference between invoking a method and receiving a transaction.<br/>
+Top up the faucet:
+
+```javascript
+> eth.sendTransaction({from: eth.coinbase, to: instance.address, value: web3.toWei(15, "ether")})
+"0x42e5b26b83ec80e99bdd3995680a047a88911b13e27d70c956b58b832db1af31"
+> web3.fromWei(eth.getBalance(instance.address), "ether")
+15.5
+```
+
+Now, let's try to use the faucet never directly invoking the method, but manually forging an artfully crafted transaction, like anticipated before. We need a representation of the method to invoke. `sendWei` is a function:
+
+```javascript
+> instance.sendWei
+function()
+```
+
+We can get a representation of its invocation, including the parameter:
+```javascript
+> instance.sendWei.getData(eth.accounts[1])
+"0x148f2e5e000000000000000000000000addd74744dc8e1f03955398769b1ace793960141"
+```
+
+Actually, this is exactly the number we found in the previous transaction:
+
+```javascript
+> eth.getTransaction(transaction2).input
+"0x148f2e5e000000000000000000000000addd74744dc8e1f03955398769b1ace793960141"
+```
+
+Let's use it for the transaction field `data:
+
+```javascript
+> eth.sendTransaction({from: eth.coinbase, data: instance.sendWei.getData(eth.accounts[1]), to: instance.address})
+"0x74f058112890ba804ff37d290db592ba192c3b8350200613719f8a5ba5b8b967"
+> web3.fromWei(eth.getBalance(instance.address), "ether")
+14.5
+```
+
+It's also possible to specify the gas price and the maximum amount of gas we are willing to spend:
+
+```javascript
+> eth.sendTransaction({from: eth.coinbase, data: instance.sendWei.getData(eth.accounts[1]), to: instance.address, gas:190000, gasPrice: eth.gasPrice * 2})
+"0x258f3141c486dce1f67ea47f12d2f4138c71e51c49f51d32bb73cd00d8c01005"
+> web3.fromWei(eth.getBalance(instance.address), "ether")
+13.5
+```
+
+
 
 [Deploying a faucet](faucet.md)
