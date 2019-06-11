@@ -385,6 +385,26 @@ It's also possible to specify the gas price and the maximum amount of gas we are
 13.5
 ```
 
+### Forwarder
+It's equally possible to do the same from Solidity: here's an example of a contract that invokes another contract's method by forging a transaction:
 
+```solidity
+contract ForwardToFaucet {
+
+    function forward(bytes memory data) public returns (bool success) {
+
+        bytes memory result;
+        address faucet = "0x7ffdd9650fda61adaa1688cf753e343c22616905"
+        (success, result) = faucet.call(data);
+        require(success);
+        return success;
+    }
+}
+```
+
+Notice:
+
+* the function declares to return the `bool` variable `success`: in the method body, `success` can be directly used as it was already declared;
+* [reference types are generally pointers to storage locations](https://ethereum.stackexchange.com/questions/305/what-are-common-pitfalls-or-limitations-when-coding-in-solidity); if result was declared as `bytes result`, without the keyword `memory`, it would just point to `0x0`;
 
 [Deploying a faucet](faucet.md)
